@@ -1,0 +1,20 @@
+# Despliegue en Render con un clic (Blueprint). Plan gratuito: los datos SQLite se reinician
+# cuando el servicio se reconstruye o se duerme por inactividad. Para conservarlos agrega un disco
+# (plan de pago) y define DB_PATH=/var/data/crm.db.
+services:
+  - type: web
+    name: nexucrm
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: TZ_OFFSET_HOURS
+        value: "-5"
+      - key: SEED_DEMO
+        value: "1"

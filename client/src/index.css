@@ -1,0 +1,34 @@
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/jetbrains-mono';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html, body, #root { height: 100%; }
+body { @apply bg-ink-900 text-slate-100 font-sans antialiased; }
+::selection { background: #1FA97455; }
+* { scrollbar-width: thin; scrollbar-color: #2A3B5E transparent; }
+
+@layer components {
+  .card { @apply rounded-2xl border border-line bg-ink-800; }
+  .input { @apply w-full rounded-xl border border-line bg-ink-900 px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-mute/70 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/25 disabled:opacity-60; }
+  .input.err { @apply border-danger focus:border-danger focus:ring-danger/25; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-brand text-ink-950 hover:bg-brand-300; }
+  .btn-ghost { @apply btn border border-line bg-transparent text-slate-200 hover:bg-ink-700; }
+  .btn-danger { @apply btn bg-danger text-white hover:bg-danger/85; }
+  .btn-icon { @apply inline-flex h-9 w-9 items-center justify-center rounded-lg text-mute transition hover:bg-ink-600 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60; }
+  .th { @apply px-4 py-3 text-left text-xs font-semibold text-mute whitespace-nowrap; }
+  .td { @apply px-4 py-3 text-sm; }
+}
+
+/* Recibo imprimible: al imprimir solo se ve el recibo */
+@media print {
+  body * { visibility: hidden !important; }
+  #receipt, #receipt * { visibility: visible !important; }
+  #receipt { position: absolute; inset: 0; width: 100%; background: #fff !important; color: #000 !important; box-shadow: none !important; border: 0 !important; }
+  @page { margin: 12mm; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media print { #receipt { position: fixed !important; } }
